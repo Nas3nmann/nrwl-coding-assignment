@@ -7,6 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { Route, RouterModule } from "@angular/router";
 import { LoadingIndicatorModule } from "./shared/loading-indicator/loading-indicator.module";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 const routes: Route[] = [
   {
@@ -34,6 +35,7 @@ const routes: Route[] = [
     BrowserAnimationsModule,
     LoadingIndicatorModule,
     MatButtonModule,
+    MatSnackBarModule,
     MatToolbarModule,
     RouterModule.forRoot(routes),
   ],

@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { BehaviorSubject, EMPTY, Observable, of } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { BackendService } from "../../../backend.service";
 import { LoadingIndicatorService } from "../../loading-indicator/loading-indicator.service";
 import { Ticket } from "./../ticket.model";
@@ -16,7 +18,8 @@ export class TicketStateService {
 
   constructor(
     private readonly backendService: BackendService,
-    private readonly loadingIndicatorService: LoadingIndicatorService
+    private readonly loadingIndicatorService: LoadingIndicatorService,
+    private readonly matSnackBar: MatSnackBar
   ) {
     this.fetchTickets();
   }
@@ -40,10 +43,17 @@ export class TicketStateService {
   private fetchTickets() {
     this.loadingIndicatorService.show();
 
-    this.backendService.tickets().subscribe((tickets: Ticket[]) => {
-      this._tickets$.next(tickets);
-
-      this.loadingIndicatorService.hide();
-    });
+    this.backendService
+      .tickets()
+      .pipe(
+        catchError((e) => {
+          this.matSnackBar.open("Something went wrong. Please try again.");
+          return of([]);
+        })
+      )
+      .subscribe((tickets: Ticket[]) => {
+        this._tickets$.next(tickets);
+        this.loadingIndicatorService.hide();
+      });
   }
 }
