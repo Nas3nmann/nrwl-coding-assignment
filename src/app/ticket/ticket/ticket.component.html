@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ ticket.id }} - {{ ticket.description }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-actions>
+    <mat-form-field>
+      <mat-label>Assignee</mat-label>
+      <mat-select>
+        <mat-option
+          *ngFor="let user of backendService.users() | async"
+          [ngForTrackBy]="trackUserFunction"
+          [value]="ticket.assigneeId"
+        >
+          {{ user.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button [color]="'primary'">Complete</button>
+  </mat-card-actions>
+</mat-card>
