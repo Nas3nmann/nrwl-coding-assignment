@@ -1,5 +1,5 @@
 <app-ticket-search (searchStringChange)="searchString$.next($event)"></app-ticket-search>
 
 <section *ngFor="let ticket of tickets$ | async">
-  <app-ticket [ticket]="ticket"></app-ticket>
+  <app-ticket [ticket]="ticket" (ticketChange)="updateTickets()"></app-ticket>
 </section>

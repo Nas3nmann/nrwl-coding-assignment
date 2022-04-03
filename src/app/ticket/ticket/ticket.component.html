@@ -5,15 +5,22 @@
   <mat-card-actions>
     <mat-form-field>
       <mat-label>Assignee</mat-label>
-      <mat-select>
+      <mat-select [value]="ticket.assigneeId" (selectionChange)="assign($event.value)">
         <mat-option
           *ngFor="let user of users$ | async"
-          [value]="ticket.assigneeId"
+          [value]="user.id"
         >
           {{ user.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button [color]="'primary'">Complete</button>
+    <button
+      mat-raised-button
+      [color]="'primary'"
+      (click)="complete()"
+      [disabled]="ticket.completed"
+    >
+      {{ ticket.completed ? "Already Completed" : "Complete" }}
+    </button>
   </mat-card-actions>
 </mat-card>

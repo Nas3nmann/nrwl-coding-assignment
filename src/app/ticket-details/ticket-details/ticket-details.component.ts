@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { BehaviorSubject, combineLatest } from "rxjs";
+import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
-import { BackendService } from "src/app/backend.service";
+import { BackendService, Ticket } from "src/app/backend.service";
 
 @Component({
   selector: "app-ticket-details",
@@ -11,7 +11,9 @@ import { BackendService } from "src/app/backend.service";
 export class TicketDetailsComponent {
   searchString$: BehaviorSubject<string> = new BehaviorSubject("");
 
-  tickets$ = combineLatest([this.backend.tickets(), this.searchString$]).pipe(
+  tickets$ = this.backend.tickets();
+
+  filteredTickets$ = combineLatest([this.tickets$, this.searchString$]).pipe(
     map(([tickets, searchString]) =>
       tickets.filter((ticket) => {
         if (!searchString) {
@@ -27,4 +29,8 @@ export class TicketDetailsComponent {
   );
 
   constructor(private backend: BackendService) {}
+
+  updateTickets() {
+      this.tickets$ = this.backend.tickets();
+  }
 }
