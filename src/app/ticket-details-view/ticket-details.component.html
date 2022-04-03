@@ -1,0 +1,11 @@
+<app-ticket-search
+  (searchStringChange)="searchString$.next($event)"
+></app-ticket-search>
+<app-ticket-add (ticketAdded)="ticketStateService.add($event)"></app-ticket-add>
+
+<app-ticket-card
+  *ngFor="let ticket of filteredTickets$ | async"
+  [ticket]="ticket"
+  (ticketAssigned)="assign($event)"
+  (ticketCompleted)="complete($event)"
+></app-ticket-card>

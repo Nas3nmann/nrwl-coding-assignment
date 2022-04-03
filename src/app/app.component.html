@@ -6,3 +6,4 @@
   </section>
 </mat-toolbar>
 <router-outlet></router-outlet>
+<app-loading-indicator [show]="loadingIndicatorService.isLoading$ | async"></app-loading-indicator>

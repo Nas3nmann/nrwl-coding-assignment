@@ -1,6 +1,4 @@
-import {TestBed, waitForAsync} from '@angular/core/testing';
-import {AppComponent} from './app.component';
-import {BackendService} from "./backend.service";
+import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
     let app: AppComponent;

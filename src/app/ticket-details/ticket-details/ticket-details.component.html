@@ -1,6 +1,0 @@
-<app-ticket-search (searchStringChange)="searchString$.next($event)"></app-ticket-search>
-<app-ticket-add (ticketChange)="updateTickets()"></app-ticket-add>
-
-<section *ngFor="let ticket of filteredTickets$ | async">
-  <app-ticket [ticket]="ticket" (ticketChange)="updateTickets()"></app-ticket>
-</section>
