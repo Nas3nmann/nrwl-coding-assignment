@@ -8,10 +8,10 @@ import { BackendService, Ticket } from 'src/app/backend.service';
 })
 export class TicketComponent {
 
+  users$ = this.backendService.users();
+
   @Input()
   ticket: Ticket;
-
-  trackUserFunction = (user) => user.assigneeId;
 
   constructor(public readonly backendService: BackendService) {}
 }

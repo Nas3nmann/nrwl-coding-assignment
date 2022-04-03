@@ -1,5 +1,8 @@
-<h2>Tickets</h2>
-
-<section *ngFor="let ticket of tickets | async">
-  <app-ticket [ticket]="ticket"></app-ticket>
-</section>
+<mat-toolbar color="primary">
+  <h1>Ticket App</h1>
+  <section>
+    <button mat-button routerLink="ticket-list">List View</button>
+    <button mat-button routerLink="ticket-details">Details View</button>
+  </section>
+</mat-toolbar>
+<router-outlet></router-outlet>

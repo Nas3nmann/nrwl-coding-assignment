@@ -7,8 +7,7 @@
       <mat-label>Assignee</mat-label>
       <mat-select>
         <mat-option
-          *ngFor="let user of backendService.users() | async"
-          [ngForTrackBy]="trackUserFunction"
+          *ngFor="let user of users$ | async"
           [value]="ticket.assigneeId"
         >
           {{ user.name }}

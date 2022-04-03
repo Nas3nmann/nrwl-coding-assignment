@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TicketDetailsRoutingModule } from './ticket-details-routing.module';
 import { TicketDetailsComponent } from './ticket-details/ticket-details.component';
 import { TicketModule } from '../ticket/ticket.module';
+import { TicketSearchModule } from '../ticket-search/ticket-search.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { TicketModule } from '../ticket/ticket.module';
     CommonModule,
     TicketDetailsRoutingModule,
     TicketModule,
+    TicketSearchModule
   ]
 })
 export class TicketDetailsModule { }

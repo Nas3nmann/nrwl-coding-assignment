@@ -1,25 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BackendService } from "src/app/backend.service";
+import { instance, mock } from "ts-mockito";
+import { TicketDetailsComponent } from "./ticket-details.component";
 
-import { TicketDetailsComponent } from './ticket-details.component';
-
-describe('TicketDetailsComponent', () => {
+describe("TicketDetailsComponent", () => {
   let component: TicketDetailsComponent;
-  let fixture: ComponentFixture<TicketDetailsComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ TicketDetailsComponent ]
-    })
-    .compileComponents();
-  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TicketDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    const backendServiceMock = mock(BackendService);
+    component = new TicketDetailsComponent(instance(backendServiceMock));
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

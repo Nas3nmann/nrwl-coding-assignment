@@ -1,17 +1,22 @@
 import { Component } from "@angular/core";
 import { BehaviorSubject, combineLatest } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { BackendService } from "src/app/backend.service";
 
 @Component({
-  selector: "app-ticket-details",
-  templateUrl: "./ticket-details.component.html",
-  styleUrls: ["./ticket-details.component.css"],
+  selector: "app-ticket-list",
+  templateUrl: "./ticket-list.component.html",
+  styleUrls: ["./ticket-list.component.css"],
 })
-export class TicketDetailsComponent {
+export class TicketListComponent {
+  displayedColumns = ["id", "description", "assigneeId", "status"];
+
   searchString$: BehaviorSubject<string> = new BehaviorSubject("");
 
-  tickets$ = combineLatest([this.backend.tickets(), this.searchString$]).pipe(
+  tickets$ = combineLatest([
+    this.backendService.tickets(),
+    this.searchString$,
+  ]).pipe(
     map(([tickets, searchString]) =>
       tickets.filter((ticket) => {
         if (!searchString) {
@@ -26,5 +31,5 @@ export class TicketDetailsComponent {
     )
   );
 
-  constructor(private backend: BackendService) {}
+  constructor(readonly backendService: BackendService) {}
 }

@@ -1,15 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BackendService } from "src/app/backend.service";
+import { instance, mock } from "ts-mockito";
+import { TicketComponent } from "./ticket.component";
 
-import { TicketComponent } from './ticket.component';
-
-describe('TicketComponent', () => {
+describe("TicketComponent", () => {
   let component: TicketComponent;
 
   beforeEach(() => {
-    component = new TicketComponent(null);
+    const backendServiceMock = mock(BackendService);
+    component = new TicketComponent(instance(backendServiceMock));
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
