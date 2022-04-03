@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { BehaviorSubject, combineLatest, Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { Component, OnInit } from "@angular/core";
+import { BehaviorSubject, combineLatest } from "rxjs";
+import { map } from "rxjs/operators";
 import { BackendService, Ticket } from "src/app/backend.service";
 
 @Component({
@@ -8,29 +8,35 @@ import { BackendService, Ticket } from "src/app/backend.service";
   templateUrl: "./ticket-details.component.html",
   styleUrls: ["./ticket-details.component.css"],
 })
-export class TicketDetailsComponent {
+export class TicketDetailsComponent implements OnInit {
   searchString$: BehaviorSubject<string> = new BehaviorSubject("");
 
-  tickets$ = this.backend.tickets();
+  tickets$: BehaviorSubject<Ticket[]> = new BehaviorSubject<Ticket[]>([]);
 
   filteredTickets$ = combineLatest([this.tickets$, this.searchString$]).pipe(
-    map(([tickets, searchString]) =>
-      tickets.filter((ticket) => {
-        if (!searchString) {
-          return true;
-        }
-
-        return (
-          !!ticket.description &&
-          ticket.description.toLowerCase().includes(searchString.toLowerCase())
-        );
-      })
-    )
+    map(([tickets, searchString]) => this.filterTickets(tickets, searchString))
   );
 
   constructor(private backend: BackendService) {}
 
+  ngOnInit(): void {
+    this.updateTickets();
+  }
+
   updateTickets() {
-      this.tickets$ = this.backend.tickets();
+    this.backend.tickets().subscribe((tickets) => this.tickets$.next(tickets));
+  }
+
+  private filterTickets(tickets: Ticket[], searchString: string): Ticket[] {
+    return tickets.filter((ticket) => {
+      if (!searchString) {
+        return true;
+      }
+
+      return (
+        !!ticket.description &&
+        ticket.description.toLowerCase().includes(searchString.toLowerCase())
+      );
+    });
   }
 }
